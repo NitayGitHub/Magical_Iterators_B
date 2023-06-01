@@ -19,6 +19,9 @@ namespace ariel
         vector<int*> primeList;
         vector<int*> sideCrossList;
 
+        void updateAscendingList();
+        void updatePrimeList();
+        void updateSideCrossList();
     public:
         // Main functions
         void addElement(int element);
@@ -29,9 +32,6 @@ namespace ariel
         bool isEmpty() const;
         bool isPrime(int num) const;
         string toString() const;
-        void updateAscendingList();
-        void updatePrimeList();
-        void updateSideCrossList();
 
         // Getters
         vector<int> &getContainer() const;
