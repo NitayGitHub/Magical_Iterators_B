@@ -56,7 +56,7 @@ namespace ariel
         while (left <= right)
         {
             itlist.push_back(&container[left++]); // Select an element from the start
-            if (left != right)
+            if (left <= right)
             {
                 itlist.push_back(&container[right--]); // Select an element from the end
             }
@@ -81,7 +81,7 @@ namespace ariel
         // update IteratorLists
         for (auto it = _itlists.begin(); it != _itlists.end(); ++it)
         {
-            it->updateList(_container);
+            it->performUpdate(_container);
         }
     }
 
@@ -98,7 +98,7 @@ namespace ariel
         // update IteratorLists
         for (auto it = _itlists.begin(); it != _itlists.end(); ++it)
         {
-            it->updateList(_container);
+            it->performUpdate(_container);
         }
     }
 
@@ -124,7 +124,7 @@ namespace ariel
     }
 
     // Getters
-    vector<int> &MagicalContainer::getContainer() const
+    vector<int>& MagicalContainer::getContainer() const
     {
         return (vector<int> &)_container;
     }

@@ -9,7 +9,7 @@ namespace ariel
 {
     // Constructors
     MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer &container) : 
-    MagicalIterator(container.getAscendingList()) {}
+    MagicalIterator(container._itlists[0].getList()) {}
 
     MagicalContainer::AscendingIterator::AscendingIterator(const AscendingIterator &other) : 
     MagicalIterator(other.List, other.indx) {}

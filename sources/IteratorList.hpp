@@ -21,9 +21,15 @@ namespace ariel
         IteratorList(function<void(vector<int>&, vector<int *>&)> updateList) : updateList(updateList) {}
 
         // Main functions
-        void updateList(vector<int> container)
+        void performUpdate(vector<int>& container)
         {
             updateList(container, list);
+        }
+
+        // Getters
+        vector<int *>& getList() const
+        {
+            return (vector<int *>&)list;
         }
     };
 }

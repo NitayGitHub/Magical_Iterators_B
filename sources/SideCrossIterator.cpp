@@ -9,7 +9,7 @@ namespace ariel
 {
     // Constructors
     MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer &container) : 
-    MagicalIterator(container.getSideCrossList()) {}
+    MagicalIterator(container._itlists[2].getList()) {}
 
     MagicalContainer::SideCrossIterator::SideCrossIterator(const SideCrossIterator &other) : 
     MagicalIterator(other.List, other.indx) {}
