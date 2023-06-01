@@ -5,8 +5,72 @@
 #include <vector>
 #include <cmath>
 using namespace std;
+
 namespace ariel
 {
+    auto updAscList = [](vector<int> &container, vector<int *> &itlist)
+    {
+        itlist.clear();
+        for (auto it = container.begin(); it != container.end(); ++it)
+        {
+            itlist.push_back(&(*it));
+        }
+        sort(itlist.begin(), itlist.end(), [](int *a, int *b)
+             { return *a < *b; });
+    };
+
+    bool isPrime(int num)
+    {
+        if (num < 2)
+        {
+            return false;
+        }
+        for (int i = 2; i <= sqrt(num); i++)
+        {
+            if (num % i == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    auto updPrimeList = [](vector<int> &container, vector<int *> &itlist)
+    {
+        itlist.clear();
+        for (auto it = container.begin(); it != container.end(); ++it)
+        {
+            if (isPrime(*it))
+            {
+                itlist.push_back(&(*it));
+            }
+        }
+    };
+
+    auto updSideCrossList = [](vector<int> &container, vector<int *> &itlist)
+    {
+        itlist.clear();
+        unsigned long left = 0;                      // Pointer starting from the beginning
+        unsigned long right = container.size() - 1; // Pointer starting from the end
+
+        while (left <= right)
+        {
+            itlist.push_back(&container[left++]); // Select an element from the start
+            if (left != right)
+            {
+                itlist.push_back(&container[right--]); // Select an element from the end
+            }
+        }
+    };
+
+    // Constructors
+    MagicalContainer::MagicalContainer()
+    {
+        _itlists.push_back(IteratorList(updAscList));
+        _itlists.push_back(IteratorList(updPrimeList));
+        _itlists.push_back(IteratorList(updSideCrossList));
+    }
+
     // Main Functions
     void MagicalContainer::addElement(int element)
     {
@@ -14,14 +78,11 @@ namespace ariel
         // add to container
         _container.push_back(element);
 
-        // add to ascendingList
-        updateAscendingList();
-
-        // add to primeList
-        updatePrimeList();
-
-        // add to sideCrossList
-        updateSideCrossList();
+        // update IteratorLists
+        for (auto it = _itlists.begin(); it != _itlists.end(); ++it)
+        {
+            it->updateList(_container);
+        }
     }
 
     void MagicalContainer::removeElement(int element)
@@ -34,14 +95,11 @@ namespace ariel
         }
         _container.erase(index);
 
-        // remove from primeList
-        updatePrimeList();
-
-        // remove from ascendingList
-        updateAscendingList();
-
-        // remove from sideCrossList
-        updateSideCrossList();
+        // update IteratorLists
+        for (auto it = _itlists.begin(); it != _itlists.end(); ++it)
+        {
+            it->updateList(_container);
+        }
     }
 
     int MagicalContainer::size() const
@@ -65,79 +123,10 @@ namespace ariel
         return str;
     }
 
-    bool MagicalContainer::isPrime(int num) const
-    {
-        if (num < 2)
-        {
-            return false;
-        }
-        for (int i = 2; i <= sqrt(num); i++)
-        {
-            if (num % i == 0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    void MagicalContainer::updateAscendingList()
-    {
-        ascendingList.clear();
-        for (auto it = _container.begin(); it != _container.end(); ++it)
-        {
-            ascendingList.push_back(&(*it));
-        }
-        sort(ascendingList.begin(), ascendingList.end(), [](int *a, int *b)
-             { return *a < *b; });
-    }
-
-    void MagicalContainer::updatePrimeList()
-    {
-        primeList.clear();
-        for (auto it = _container.begin(); it != _container.end(); ++it)
-        {
-            if (isPrime(*it))
-            {
-                primeList.push_back(&(*it));
-            }
-        }
-    }
-
-    void MagicalContainer::updateSideCrossList()
-    {
-        sideCrossList.clear();
-        unsigned long left = 0;                      // Pointer starting from the beginning
-        unsigned long right = _container.size() - 1; // Pointer starting from the end
-
-        while (left <= right)
-        {
-            sideCrossList.push_back(&_container[left++]); // Select an element from the start
-            if (left <= right)
-            {
-                sideCrossList.push_back(&_container[right--]); // Select an element from the end
-            }
-        }
-    }
-
     // Getters
     vector<int> &MagicalContainer::getContainer() const
     {
         return (vector<int> &)_container;
     }
 
-    vector<int *> &MagicalContainer::getAscendingList() const
-    {
-        return (vector<int *> &)ascendingList;
-    }
-
-    vector<int *> &MagicalContainer::getPrimeList() const
-    {
-        return (vector<int *> &)primeList;
-    }
-
-    vector<int *> &MagicalContainer::getSideCrossList() const
-    {
-        return (vector<int *> &)sideCrossList;
-    }
 }

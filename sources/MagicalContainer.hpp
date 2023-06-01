@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 #include "MagicalIterator.hpp"
+#include "IteratorList.hpp"
 
 using namespace std;
 
@@ -15,14 +16,12 @@ namespace ariel
     {
     private:
         vector<int> _container;
-        vector<int*> ascendingList;
-        vector<int*> primeList;
-        vector<int*> sideCrossList;
+        vector<IteratorList> _itlists;
 
-        void updateAscendingList();
-        void updatePrimeList();
-        void updateSideCrossList();
     public:
+        // Constructors
+        MagicalContainer();
+
         // Main functions
         void addElement(int element);
         void removeElement(int element);
@@ -30,17 +29,12 @@ namespace ariel
 
         // Aid functions
         bool isEmpty() const;
-        bool isPrime(int num) const;
         string toString() const;
 
         // Getters
         vector<int> &getContainer() const;
-        vector<int*> &getAscendingList() const;
-        vector<int*> &getPrimeList() const;
-        vector<int*> &getSideCrossList() const;
 
         // Iterators
-
         class AscendingIterator : public MagicalIterator
         {
         public:

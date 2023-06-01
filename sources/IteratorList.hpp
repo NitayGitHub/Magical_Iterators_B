@@ -12,15 +12,19 @@ namespace ariel
 {
     class IteratorList
     {
-    protected:
+    private:
         vector<int *> list;
+        function<void(vector<int>&, vector<int *>&)> updateList;
+
     public:
         // Constructors
-        IteratorList(function<void(vector<int>)> updateList): updateList(updateList) {}
+        IteratorList(function<void(vector<int>&, vector<int *>&)> updateList) : updateList(updateList) {}
 
         // Main functions
-        void UpdateList(vector<int> container);
-        
+        void updateList(vector<int> container)
+        {
+            updateList(container, list);
+        }
     };
 }
 
