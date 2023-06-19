@@ -33,6 +33,7 @@ namespace ariel
 
         // Getters
         vector<int> &getContainer() const;
+        IteratorList &getIteratorList(size_t index) const;
 
         // Iterators
         class AscendingIterator : public MagicalIterator

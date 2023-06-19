@@ -1,46 +1,98 @@
 #include <iostream>
 #include "sources/MagicalContainer.hpp"
+#include <chrono>
+#include <random>
 
 using namespace ariel;
-int main() {
-    // Create a MagicalContainer and add some elements
-    MagicalContainer container;
-    container.addElement(17);
-    container.addElement(2);
-    container.addElement(25);
-    container.addElement(9);
-    container.addElement(3);
 
-    // Print container size
-    std::cout << "Size of container: " << container.size() << std::endl;
+int random_int(int min = 0, int max = 100)
+{
+    default_random_engine generator(static_cast<unsigned long>(chrono::system_clock::now().time_since_epoch().count()));
+    uniform_int_distribution<int> distribution(min, max);
+    return distribution(generator);
+}
+
+int main()
+{
+    // Create a MagicalContainer and add some elements
+    cout << "How many elements would you like to add?" << endl;
+    int numOfElements;
+    cin >> numOfElements;
+
+    MagicalContainer container;
+    for (int i = 0; i < numOfElements; i++)
+    {
+        container.addElement(random_int());
+    }
+
+    // Print container
+    cout << "Container: " << endl;
+    cout << container.toString() << endl;
 
     // Use AscendingIterator to display elements in ascending order
-    std::cout << "Elements in ascending order:\n";
+    cout << "Elements in ascending order:\n";
     MagicalContainer::AscendingIterator ascIter(container);
-    for (auto it = ascIter.begin(); it != ascIter.end(); ++it) {
-        std::cout << *it << ' ';   // 2 3 9 17 25
+    for (auto it = ascIter.begin(); it != ascIter.end(); ++it)
+    {
+        cout << *it << ' ';
     }
-    std::cout << std::endl;
+    cout << endl;
 
     // Use DescendingIterator to display elements in descending order
-    std::cout << "Elements in cross order:\n";
+    cout << "Elements in cross order:\n";
     MagicalContainer::SideCrossIterator crossIter(container);
-    for (auto it = crossIter.begin(); it != crossIter.end(); ++it) {
-        std::cout << *it << ' ';  // 2 25 3 17 9
+    for (auto it = crossIter.begin(); it != crossIter.end(); ++it)
+    {
+        cout << *it << ' ';
     }
-    std::cout << std::endl;
+    cout << endl;
 
     // Use PrimeIterator to display prime numbers only
-    std::cout << "Prime numbers:\n";
+    cout << "Prime numbers:\n";
     MagicalContainer::PrimeIterator primeIter(container);
-    for (auto it = primeIter.begin(); it != primeIter.end(); ++it) {
-        std::cout << *it << ' ';  // 2 3 17 
+    for (auto it = primeIter.begin(); it != primeIter.end(); ++it)
+    {
+        cout << *it << ' '; // 2 3 17
     }
-    std::cout << std::endl;
+    cout << endl;
 
-    // Remove an element from the container and display the size
-    container.removeElement(9);
-    std::cout << "Size of container after removing an element: " << container.size() << std::endl;
+    // Remove elements
+    cout << "Enter elements to remove, enter -1 to stop" << endl;
+    int elementToRemove;
+    cin >> elementToRemove;
+    while (elementToRemove != -1)
+    {
+        container.removeElement(elementToRemove);
+        cin >> elementToRemove;
+    }
+
+    // Print container
+    cout << "Container: " << endl;
+    cout << container.toString() << endl;
+
+    // Use AscendingIterator to display elements in ascending order
+    cout << "Elements in ascending order:\n";
+    for (auto it = ascIter.begin(); it != ascIter.end(); ++it)
+    {
+        cout << *it << ' ';
+    }
+    cout << endl;
+
+    // Use DescendingIterator to display elements in descending order
+    cout << "Elements in cross order:\n";
+    for (auto it = crossIter.begin(); it != crossIter.end(); ++it)
+    {
+        cout << *it << ' ';
+    }
+    cout << endl;
+
+    // Use PrimeIterator to display prime numbers only
+    cout << "Prime numbers:\n";
+    for (auto it = primeIter.begin(); it != primeIter.end(); ++it)
+    {
+        cout << *it << ' '; // 2 3 17
+    }
+    cout << endl;
 
     return 0;
 }

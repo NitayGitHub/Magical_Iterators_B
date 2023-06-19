@@ -18,7 +18,7 @@ run: test
 demo: Demo.o $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-test: TestRunner.o StudentTest1.o  $(OBJECTS)
+test: TestRunner.o Test.o  $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 

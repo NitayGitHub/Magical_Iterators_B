@@ -50,7 +50,11 @@ namespace ariel
     auto updSideCrossList = [](vector<int> &container, vector<int *> &itlist)
     {
         itlist.clear();
-        unsigned long left = 0;                      // Pointer starting from the beginning
+        if (container.empty())
+        {
+            return;
+        }
+        unsigned long left = 0;                     // Pointer starting from the beginning
         unsigned long right = container.size() - 1; // Pointer starting from the end
 
         while (left <= right)
@@ -124,9 +128,14 @@ namespace ariel
     }
 
     // Getters
-    vector<int>& MagicalContainer::getContainer() const
+    vector<int> &MagicalContainer::getContainer() const
     {
         return (vector<int> &)_container;
+    }
+
+    IteratorList &MagicalContainer::getIteratorList(size_t index) const
+    {
+        return (IteratorList &)_itlists[index];
     }
 
 }
